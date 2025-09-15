@@ -11,5 +11,6 @@ namespace Blog.Models
         public required string Cuerpo { get; set; }
         [DisplayName("Imagen Portada")]
         public IFormFile? ImagenPortada { get; set; }
+        public string? ImagenPortadaIA { get; set; }
     }
 }

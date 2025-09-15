@@ -1,9 +1,8 @@
-﻿namespace Blog.Services
+﻿namespace Blog.Services;
+
+public interface IServicioUsuarios
 {
-    public interface IServicioUsuarios
-    {
-        string? ObtenerUsuarioId();
-        Task<bool> PuedeUsuarioBorrarComentarios();
-        Task<bool> PuedeUsuarioHacerCRUDEntradas();
-    }
+    string? ObtenerUsuarioId();
+    Task<bool> PuedeUsuarioBorrarComentarios();
+    Task<bool> PuedeUsuarioHacerCRUDEntradas();
 }

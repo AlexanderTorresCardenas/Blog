@@ -4,7 +4,6 @@ using Blog.Entities;
 using Blog.Models;
 using Blog.Services;
 using Blog.Utilities;
-using Blog.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,18 +16,23 @@ namespace Blog.Controllers
         private readonly IAlmacenadorArchivos almacenadorArchivos;
         private readonly IServicioUsuarios servicioUsuarios;
         private readonly IServicioChat servicioChat;
+        private readonly IWebHostEnvironment env;
+        private readonly IServicioImagenes servicioImagenes;
         private readonly string contenedor = "entradas";
-
 
         public EntradasController(ApplicationDbContext context,
             IAlmacenadorArchivos almacenadorArchivos,
             IServicioUsuarios servicioUsuarios,
-            IServicioChat servicioChat)
+            IServicioChat servicioChat,
+            IWebHostEnvironment env,
+            IServicioImagenes servicioImagenes)
         {
             this.context = context;
             this.almacenadorArchivos = almacenadorArchivos;
             this.servicioUsuarios = servicioUsuarios;
             this.servicioChat = servicioChat;
+            this.env = env;
+            this.servicioImagenes = servicioImagenes;
         }
 
         [HttpGet]
@@ -51,6 +55,11 @@ namespace Blog.Controllers
             if (modelo.ImagenPortada is not null)
             {
                 portadaUrl = await almacenadorArchivos.Almacenar(contenedor, modelo.ImagenPortada);
+            }
+            else if (modelo.ImagenPortadaIA is not null)
+            {
+                var archivo = Base64AIFormFile(modelo.ImagenPortadaIA);
+                portadaUrl = await almacenadorArchivos.Almacenar(contenedor, archivo);
             }
 
             string usuarioId = servicioUsuarios.ObtenerUsuarioId()!;
@@ -170,14 +179,12 @@ namespace Blog.Controllers
                 portadaUrl = await almacenadorArchivos.Editar(modelo.ImagenPortadaActual,
                     contenedor, modelo.ImagenPortada);
             }
-            /*
             else if (modelo.ImagenPortadaIA is not null)
             {
                 var archivo = Base64AIFormFile(modelo.ImagenPortadaIA);
                 portadaUrl = await almacenadorArchivos.Editar(modelo.ImagenPortadaActual,
                     contenedor, archivo);
             }
-            */
             else if (modelo.ImagenRemovida)
             {
                 await almacenadorArchivos.Borrar(modelo.ImagenPortadaActual, contenedor);
@@ -233,8 +240,31 @@ namespace Blog.Controllers
                 await Response.WriteAsync(segmento);
                 await Response.Body.FlushAsync();
             }
-            
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GenerarImagen([FromQuery] string titulo)
+        {
+            if (string.IsNullOrWhiteSpace(titulo))
+            {
+                return BadRequest("El título no puede estar vacío.");
+            }
+
+            var bytes = await servicioImagenes.GenerarPortadaEntrada(titulo);
+            return File(bytes, "image/png");
+
+        }
+
+        private IFormFile Base64AIFormFile(string base64)
+        {
+            byte[] bytes = Convert.FromBase64String(base64);
+            var stream = new MemoryStream(bytes);
+            IFormFile archivo = new FormFile(stream, 0, bytes.Length, "imagen", "imagen.png");
+            return archivo;
+        }
+
+
+
 
     }
 }

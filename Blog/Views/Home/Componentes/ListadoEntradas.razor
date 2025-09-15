@@ -13,13 +13,13 @@
                 @if (string.IsNullOrEmpty(entrada.PortadaUrl))
                 {
                     <a href="/entradas/detalle/@entrada.Id">
-                        <img src="/img/404.jpg" class="card-img-top" alt="portada de la entrada" />
+                        <img src="/img/404.jpg" class="card-img-top" alt="portada del articulo" />
                     </a>
                 }
                 else
                 {
                     <a href="/entradas/detalle/@entrada.Id">
-                        <img src="@entrada.PortadaUrl" class="card-img-top" alt="portada de la entrada" />
+                        <img src="@entrada.PortadaUrl" class="card-img-top" alt="portada del articulo" />
                     </a>
                 }
 
@@ -88,7 +88,6 @@
 
         seguirBuscandoEntradas = entradasLocal.Any();
         entradas.AddRange(entradasLocal);
-
         indice += cantidadRegistrosSolicitar;
         cargando = false;
     }

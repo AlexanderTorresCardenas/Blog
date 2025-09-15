@@ -8,98 +8,102 @@
     var urlRetorno = Context.ObtenerUrlRetorno();
 }
 
-<div class="d-flex justify-content-between align-items-center flex-wrap">
-    <h3>@Model.Titulo</h3>
-    @if (Model.MostrarBotonEdicion)
-    {
-        <div class="d-flex gap-2">
-            <a class="btn btn-primary" asp-action="Editar" asp-route-id="@Model.Id">Editar esta entrada</a>
-            <form asp-action="Borrar" style="display: inline">
-                <input type="hidden" name="Id" id="id" value="@Model.Id" />
-                @if (Model.EntradaBorrada)
-                {
-                    <button class="btn btn-secondary" asp-action="Borrar"
-                            asp-route-borrado="false">
-                        Restaurar
-                    </button>
-                }
-                else
-                {
-                    <button class="btn btn-danger" asp-action="Borrar"
-                            asp-route-borrado="true">
-                        Borrar
-                    </button>
-                }
-            </form>
+<div >
+    <div class="row">
+        <div class="col-8">
+            <h3>@Model.Titulo</h3>
         </div>
-    }
-</div>
-<h6>@Model.EscritoPor | @fechaPublicacionConFormato</h6>
-
-<div class="d-flex justify-content-between align-items-center">
-@if (!string.IsNullOrEmpty(Model.PortadaUrl))
-{
-    <img alt="portada" src="@Model.PortadaUrl" class="img-fluid" />
-}
-</div>
-<div id="contenido">
-</div>
-
-<hr />
-
-@if (Model.Comentarios.Any())
-{
-    <h2>Comentarios</h2>
-
-    <div class="mb-4">
-        @foreach (var comentario in Model.Comentarios)
+        @if (Model.MostrarBotonEdicion)
         {
-            <div class="mb-2 p-2" style="border-left: 1px solid gray">
-                <h6>@comentario.EscritoPor</h6>
-                <h6>@comentario.FechaPublicacion.ToString("dd MMM, yyyy 'a las' hh:mm tt")</h6>
-                <div>
-                    @comentario.Cuerpo
-                </div>
-                @if (comentario.MostrarBotonBorrar)
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a class="btn btn-outline-primary btn-sm" asp-action="Editar" asp-route-id="@Model.Id">Editar articulo</a>
+                <form asp-action="Borrar" style="display: inline">
+                    <input type="hidden" name="Id" id="id" value="@Model.Id" />
+                    @if (Model.EntradaBorrada)
+                    {
+                        <button class="btn btn-outline-secondary btn-sm" asp-action="Borrar"
+                                asp-route-borrado="false">
+                            Restaurar
+                        </button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-outline-danger btn-sm" asp-action="Borrar"
+                                asp-route-borrado="true">
+                            Borrar
+                        </button>
+                    }
+                </form>
+            </div>
+        }
+    </div>
+    <div class="row mb-1">
+        <h6>@Model.EscritoPor | @fechaPublicacionConFormato</h6>
+    </div>
+    <div class="row mb-1">
+        @if (!string.IsNullOrEmpty(Model.PortadaUrl))
+        {
+            <img alt="portada" src="@Model.PortadaUrl" class="img-fluid" />
+        }
+    </div>
+    <div class="row mb-1">
+        <div id="contenido">
+        </div>
+    </div>
+
+    <div class="row mb-1">
+        @if (Model.Comentarios.Any())
+        {
+            <h2>Comentarios</h2>
+            <div>
+                @foreach (var comentario in Model.Comentarios)
                 {
-                    <div class="mt-2">
-                        <a class="btn btn-danger" asp-action="borrar"
-                           asp-controller="comentarios" asp-route-id="@comentario.Id">
-                            Borrar comentario
-                        </a>
+                    <div class="mb-2 p-2" style="border-bottom: 1px solid gray">
+                        <h6>@comentario.EscritoPor</h6>
+                        <h6>@comentario.FechaPublicacion.ToString("dd MMM, yyyy 'a las' hh:mm tt")</h6>
+                        <div>
+                            @comentario.Cuerpo
+                        </div>
+                        @if (comentario.MostrarBotonBorrar)
+                        {
+                            <div class="mt-2">
+                                <a class="btn btn-danger" asp-action="borrar"
+                                   asp-controller="comentarios" asp-route-id="@comentario.Id">
+                                    Borrar comentario
+                                </a>
+                            </div>
+                        }
                     </div>
                 }
             </div>
         }
     </div>
-}
+</div>
+    <div class="row mt-1">
+        <h2>Deja un comentario</h2>
+        @if (User.Identity!.IsAuthenticated)
+        {
+            <form asp-action="comentar" asp-controller="comentarios">
+                <input type="hidden" asp-for="Id" />
+                <div>
+                    <textarea id="cuerpo" name="cuerpo" required class="form-control"
+                          style="height: 100px" placeholder="Escribe un comentario..."></textarea>
 
-
-<h2>Deja un comentario</h2>
-@if (User.Identity!.IsAuthenticated)
-{
-    <form asp-action="comentar" asp-controller="comentarios">
-        <input type="hidden" asp-for="Id" />
-        <div style="max-width: 600px">
-            <textarea id="cuerpo" name="cuerpo" required class="form-control"
-                  style="height: 100px" placeholder="Escribe un comentario..."></textarea>
-
-            <div class="d-flex justify-content-end mt-2">
-                <button type="submit" class="btn btn-primary">Comenta</button>
-            </div>
-        </div>
-    </form>
-}
-else
-{
-    <p>
-        Logueate para comentar <a asp-controller="usuarios"
-                                  asp-action="login" asp-route-urlRetorno="@urlRetorno">aquí</a>
-    </p>
-}
-
-<input type="hidden" id="cuerpoDelta" name="cuerpoDelta" value="@Model.Cuerpo" />
-
+                    <div class="d-flex justify-content-end mt-2">
+                        <button type="submit" class="btn btn-outline-primary">Comenta</button>
+                    </div>
+                </div>
+            </form>
+        }
+        else
+        {
+            <p>
+                Logueate para comentar <a asp-controller="usuarios"
+                                          asp-action="login" asp-route-urlRetorno="@urlRetorno">aquí</a>
+            </p>
+        }
+        <input type="hidden" id="cuerpoDelta" name="cuerpoDelta" value="@Model.Cuerpo" />
+</div>
 @section Scripts {
     <script type="module">
         import { QuillDeltaToHtmlConverter } from "https://cdn.jsdelivr.net/npm/quill-delta-to-html/+esm";
