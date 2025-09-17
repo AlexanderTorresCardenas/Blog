@@ -59,7 +59,7 @@ https://platform.openai.com/docs/api-reference/batch
 Update-Database
 ```
 
-5. ** Crear archivo** secrets.json
+5. **Crear archivo** secrets.json
 Para esto debes dar clic derecho en en el proyecto y elegir la opcion Manage Users Secrets
 
 ```
