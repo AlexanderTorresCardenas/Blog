@@ -20,8 +20,16 @@ Proyecto para crear articulos basados en el desarrollo de software asistido por 
 
 ![](https://github.com/AlexanderTorresCardenas/Blog/blob/main/Blog/wwwroot/img/gui-01.png)
 
-**Tabla de contenido**
+## AI de Open AI usadas en el proyecto
 
-[TOCM]
+### El generador de texto
+Usando gpt-4o-mini de Open AI es una herramienta de inteligencia artificial de vanguardia que puede generar textos de alta calidad. Los textos generados por la IA que produce la tecnología se basan en un algoritmo de deep learning -aprendizaje profundo- que se entrena con un gran corpus de texto.
+https://platform.openai.com/docs/guides/text
 
-[TOC]
+### DALL·E: creación de imágenes a partir de texto
+Crea imágenes a partir de descripciones textuales para una amplia gama de conceptos expresables en lenguaje natural.
+https://openai.com/es-ES/index/dall-e/
+
+### API por lotes
+Usando gpt-4o-mini de OpenAI, permite enviar solicitudes para el procesamiento por lotes asíncrono. Estas solicitudes en un plazo de 24 horas. Los detalles de cada solicitud se leerán desde un archivo precargado y las respuestas se escribirán en un archivo de salida. 
+https://platform.openai.com/docs/api-reference/batch
