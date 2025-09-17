@@ -13,4 +13,6 @@ public class Comentario
     public string? UsuarioId { get; set; }
     public Usuario? Usuario { get; set; }
     public bool Borrado { get; set; }
+    public int? Puntuacion { get; set; }
+
 }

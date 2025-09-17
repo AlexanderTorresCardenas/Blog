@@ -1,6 +1,7 @@
 using Blog.Configurations;
 using Blog.Datos;
 using Blog.Entities;
+using Blog.Job;
 using Blog.Services;
 using Blog.Utilities;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -30,8 +31,13 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<IAlmacenadorArchivos, AlmacenadorArchivosLocal>();
 builder.Services.AddTransient<IServicioUsuarios, ServicioUsuarios>();
+
 builder.Services.AddTransient<IServicioChat, ServicioChatOpenAI>();
 builder.Services.AddTransient<IServicioImagenes, ServicioImagenesOpenAI>();
+builder.Services.AddScoped<IAnalisisSentimientos, AnalisisSentimientosOpenAI>();
+
+builder.Services.AddHttpClient();
+builder.Services.AddHostedService<AnalisisSentimientosRecurrente>();
 
 //configuracion de cadena de conexion para la base de datos
 builder.Services.AddDbContextFactory<ApplicationDbContext>(options => {
