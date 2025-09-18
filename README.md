@@ -18,9 +18,14 @@ Proyecto para crear articulos basados en el desarrollo de software asistido por 
 
 ![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjk0A86MXNEP4bYXGeg2NeU8Ij0TVaZYS02rDj-d66Hy9-A0uTY3sTF76dAkP6dT5gjFU&usqp=CAU)
 
-![](https://img.shields.io/github/stars/pandao/editor.md.svg) ![](https://img.shields.io/github/forks/pandao/editor.md.svg) ![](https://img.shields.io/github/tag/pandao/editor.md.svg) ![](https://img.shields.io/github/release/pandao/editor.md.svg)
+# **Propuesta de solucion Blog + IA**
+![](https://github.com/AlexanderTorresCardenas/Blog/blob/main/Blog/wwwroot/img/propuesta-blog.jpg)
 
-![](https://github.com/AlexanderTorresCardenas/Blog/blob/main/Blog/wwwroot/img/gui-01.png)
+# **Prototipo Blog + IA**
+![](https://github.com/AlexanderTorresCardenas/Blog/blob/main/Blog/wwwroot/img/prototipo-blog.jpg)
+
+# **GUI Blog + IA**
+![](https://github.com/AlexanderTorresCardenas/Blog/blob/main/Blog/wwwroot/img/gui-blog.png)
 
 ------------
 
@@ -72,3 +77,7 @@ Para esto debes dar clic derecho en en el proyecto y elegir la opcion Manage Use
   }
 }
 ```
+
+## **Herramientas**
+1. **Crear tu README.md** [link](https://pandao.github.io/editor.md/en.html)
+
